@@ -1,0 +1,308 @@
+@import "tailwindcss";
+
+/* ─────────────────────────────────────────
+   Theme tokens
+───────────────────────────────────────── */
+@theme {
+  --font-sans: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-hero: var(--font-bebas-neue), "Bebas Neue", sans-serif;
+}
+
+/* ─────────────────────────────────────────
+   Glassmorphism primitives
+───────────────────────────────────────── */
+.liquid-pill {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 255, 255, 0.10) 0%,
+    rgba(255, 255, 255, 0.05) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.13);
+  backdrop-filter: blur(24px) saturate(160%);
+  -webkit-backdrop-filter: blur(24px) saturate(160%);
+  box-shadow:
+    0 2px 16px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.10) inset,
+    0 -1px 0 rgba(0, 0, 0, 0.25) inset;
+}
+
+.liquid-panel {
+  background: linear-gradient(
+    160deg,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.025) 100%
+  );
+  border: 1px solid rgba(255, 255, 255, 0.09);
+  border-radius: 1.25rem;
+  backdrop-filter: blur(28px) saturate(140%);
+  -webkit-backdrop-filter: blur(28px) saturate(140%);
+  box-shadow:
+    0 8px 48px rgba(0, 0, 0, 0.55),
+    0 1px 0 rgba(255, 255, 255, 0.08) inset;
+}
+
+/* ─────────────────────────────────────────
+   3-D card flip utilities
+───────────────────────────────────────── */
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+.promo-cell-inner {
+  transition: transform 0.52s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* ─────────────────────────────────────────
+   Keyframes
+───────────────────────────────────────── */
+@keyframes promo-enter-kf {
+  from { opacity: 0; transform: scale(0.78); }
+  to   { opacity: 1; transform: scale(1);    }
+}
+
+@keyframes promo-fade-kf {
+  from { opacity: 0; transform: translateY(10px); }
+  to   { opacity: 1; transform: translateY(0);    }
+}
+
+@keyframes promo-sheen-kf {
+  0%   { left: -70%; }
+  100% { left: 130%; }
+}
+
+@keyframes promo-float-kf {
+  0%, 100% { transform: translateY(0);    }
+  50%       { transform: translateY(-4px); }
+}
+
+@keyframes ripple-kf {
+  0%   { transform: scale(0.82); opacity: 0.75; }
+  100% { transform: scale(1.65); opacity: 0;    }
+}
+
+@keyframes hit-icon-kf {
+  0%   { transform: scale(0) rotate(-18deg); opacity: 0; }
+  60%  { transform: scale(1.22) rotate(4deg);             }
+  100% { transform: scale(1) rotate(0deg);   opacity: 1; }
+}
+
+/* ─────────────────────────────────────────
+   Reveal animation (runs while card is already flipped)
+───────────────────────────────────────── */
+.promo-enter {
+  animation: promo-enter-kf 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+/* ─────────────────────────────────────────
+   Fade-in (messages, CTA block)
+───────────────────────────────────────── */
+.promo-fade {
+  animation: promo-fade-kf 0.38s ease both;
+}
+
+/* ─────────────────────────────────────────
+   Empty cell — sheen sweep
+───────────────────────────────────────── */
+.promo-empty-sheen {
+  animation: promo-sheen-kf 2.6s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Empty cell — floating logo
+───────────────────────────────────────── */
+.promo-empty-float {
+  animation: promo-float-kf 3.2s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Hit cell — ripple ring
+───────────────────────────────────────── */
+.promo-hit-ripple {
+  border: 1.5px solid currentColor;
+  animation: ripple-kf 0.55s ease-out 0.08s both;
+}
+
+.promo-hit-ripple--coupon   { color: rgb(52, 211, 153);  }
+.promo-hit-ripple--shipping { color: rgb(96, 165, 250);  }
+.promo-hit-ripple--shirt    { color: rgb(52, 211, 153);  }
+.promo-hit-ripple--trophy   { color: rgb(251, 191, 36);  }
+
+/* ─────────────────────────────────────────
+   Hit cell — icon pop
+───────────────────────────────────────── */
+.promo-hit-icon {
+  animation: hit-icon-kf 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) 0.08s both;
+}
+
+/* ─────────────────────────────────────────
+   Bomb shake (after victory reveal)
+───────────────────────────────────────── */
+@keyframes promo-shake-kf {
+  0%, 100% { transform: translateX(0) rotate(0deg); }
+  15%       { transform: translateX(-5px) rotate(-2deg); }
+  30%       { transform: translateX(5px)  rotate(2deg);  }
+  45%       { transform: translateX(-4px) rotate(-1deg); }
+  60%       { transform: translateX(4px)  rotate(1deg);  }
+  75%       { transform: translateX(-2px) rotate(-1deg); }
+  90%       { transform: translateX(2px)  rotate(0deg);  }
+}
+.promo-shake {
+  animation: promo-shake-kf 0.65s cubic-bezier(0.36, 0.07, 0.19, 0.97) both;
+}
+
+/* ─────────────────────────────────────────
+   Prize golden flash (on reveal)
+───────────────────────────────────────── */
+@keyframes promo-prize-flash-kf {
+  0%   { box-shadow: 0 0 0px rgba(251,191,36,0); }
+  40%  { box-shadow: 0 0 40px rgba(251,191,36,0.7), 0 0 80px rgba(39,201,122,0.4); }
+  100% { box-shadow: 0 0 0px rgba(251,191,36,0); }
+}
+.promo-prize-flash {
+  animation: promo-prize-flash-kf 0.5s ease-out both;
+}
+
+/* ─────────────────────────────────────────
+   Timer blink (under 2 min / expired)
+───────────────────────────────────────── */
+@keyframes promo-blink-kf {
+  0%, 100% { opacity: 1;   }
+  50%       { opacity: 0.2; }
+}
+.promo-blink {
+  animation: promo-blink-kf 1s step-end infinite;
+}
+
+/* ─────────────────────────────────────────
+   Confetti particle fall
+───────────────────────────────────────── */
+@keyframes promo-confetti-kf {
+  0%   { transform: translateY(-16px) rotate(0deg);   opacity: 1; }
+  100% { transform: translateY(105vh) rotate(540deg); opacity: 0; }
+}
+.promo-confetti-particle {
+  position: absolute;
+  top: 0;
+  animation: promo-confetti-kf linear forwards;
+}
+
+/* ─────────────────────────────────────────
+   Global body baseline
+───────────────────────────────────────── */
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* ─────────────────────────────────────────
+   Attention bar — shimmer sweep
+───────────────────────────────────────── */
+@keyframes bar-sweep-kf {
+  0%        { transform: translateX(-100%); }
+  70%, 100% { transform: translateX(220%); }
+}
+.bar-sweep {
+  animation: bar-sweep-kf 2.8s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Attention bar — text shimmer
+───────────────────────────────────────── */
+@keyframes text-shimmer-kf {
+  0%   { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.text-shimmer {
+  background: linear-gradient(
+    90deg,
+    rgba(200,255,220,0.75) 0%,
+    #ffffff 35%,
+    #27c97a 50%,
+    #ffffff 65%,
+    rgba(200,255,220,0.75) 100%
+  );
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: text-shimmer-kf 3.5s linear infinite;
+}
+
+/* ─────────────────────────────────────────
+   CTA buttons — glow pulse
+───────────────────────────────────────── */
+@keyframes cta-glow-kf {
+  0%, 100% {
+    box-shadow:
+      0 0 0 0px rgba(255,255,255,0),
+      0 2px 16px rgba(0,0,0,0.45),
+      0  1px 0  rgba(255,255,255,0.10) inset,
+      0 -1px 0  rgba(0,0,0,0.25) inset;
+  }
+  50% {
+    box-shadow:
+      0 0 0 2px rgba(255,255,255,0.09),
+      0 0 18px rgba(255,255,255,0.07),
+      0 0 38px rgba(39,201,122,0.12),
+      0 2px 16px rgba(0,0,0,0.45),
+      0  1px 0  rgba(255,255,255,0.10) inset,
+      0 -1px 0  rgba(0,0,0,0.25) inset;
+  }
+}
+.liquid-pill-glow {
+  animation: cta-glow-kf 2.4s ease-in-out infinite;
+}
+
+/* ─────────────────────────────────────────
+   Win modal — slide up
+───────────────────────────────────────── */
+@keyframes win-modal-kf {
+  from { transform: translateY(48px) scale(0.97); opacity: 0; }
+  to   { transform: translateY(0) scale(1); opacity: 1; }
+}
+.win-modal-enter {
+  animation: win-modal-kf 0.42s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+@keyframes win-overlay-kf {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+.win-overlay-enter {
+  animation: win-overlay-kf 0.3s ease both;
+}
+
+/* ─────────────────────────────────────────
+   Bomb cell — flash + icon
+───────────────────────────────────────── */
+@keyframes bomb-cell-flash-kf {
+  0%   { box-shadow: 0 0 0px rgba(239,68,68,0); }
+  35%  { box-shadow: 0 0 48px rgba(239,68,68,0.9), 0 0 80px rgba(251,146,60,0.5); }
+  100% { box-shadow: 0 0 16px rgba(239,68,68,0.2); }
+}
+.bomb-cell-flash {
+  animation: bomb-cell-flash-kf 0.5s ease-out both;
+}
+
+@keyframes bomb-icon-kf {
+  0%   { transform: scale(0) rotate(-25deg); opacity: 0; }
+  55%  { transform: scale(1.35) rotate(8deg); }
+  100% { transform: scale(1) rotate(0deg); opacity: 1; }
+}
+.bomb-icon {
+  animation: bomb-icon-kf 0.42s cubic-bezier(0.34, 1.56, 0.64, 1) 0.04s both;
+}
+
+.promo-hit-ripple--bomb { color: rgb(248, 113, 113); }
+
+/* backdrop-filter inside position:fixed breaks fixed behavior on iOS Safari.
+   Strip it from any liquid-pill or liquid-panel that lives inside a fixed ancestor. */
+.fixed .liquid-pill,
+.fixed .liquid-panel {
+  backdrop-filter: none;
+  -webkit-backdrop-filter: none;
+}
