@@ -1,0 +1,6 @@
+name = "desafiofifas"
+compatibility_date = "2024-04-05"
+compatibility_flags = ["nodejs_compat"]
+
+[assets]
+directory = "./out"
