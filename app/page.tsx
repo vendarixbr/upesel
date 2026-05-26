@@ -56,16 +56,6 @@ export default function Home() {
         </p>
       </div>
 
-      {/* ── Header ── */}
-      <header className="fixed inset-x-0 top-8 z-50 flex justify-center bg-gradient-to-b from-black/90 via-black/50 to-transparent px-4 pb-5 pt-3">
-        <div
-          className="relative flex h-14 w-full max-w-[22rem] items-center justify-center rounded-full px-6"
-          style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.05) 100%)", border: "1px solid rgba(255,255,255,0.13)", boxShadow: "0 2px 16px rgba(0,0,0,0.45),0 1px 0 rgba(255,255,255,0.10) inset,0 -1px 0 rgba(0,0,0,0.25) inset" }}
-        >
-          <div className="pointer-events-none absolute inset-y-[1px] left-[12%] right-[12%] rounded-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.18),transparent)] opacity-60 blur-sm" />
-          <NikeSwoosh />
-        </div>
-      </header>
 
       {/* ── Sticky bottom CTA ── */}
       <div className="fixed bottom-0 left-0 right-0 z-50 border-t border-white/[0.07] bg-black/85 px-4 pb-5 pt-3 backdrop-blur-xl">
@@ -98,7 +88,7 @@ export default function Home() {
         </div>
       </div>
 
-      <main className="relative flex min-h-[100dvh] flex-col items-center bg-black px-4 pb-36 pt-[7.5rem]">
+      <main className="relative flex min-h-[100dvh] flex-col items-center bg-black px-4 pb-36 pt-14">
         {/* bg orbs */}
         <div className="pointer-events-none absolute inset-0 overflow-hidden">
           <div className="absolute -top-16 left-[8%] h-80 w-80 rounded-full blur-[110px]" style={{ background: "#27c97a", opacity: 0.055 }} />
@@ -122,12 +112,15 @@ export default function Home() {
               <span className="block text-[clamp(1.2rem,5vw,1.8rem)] text-white/40">E GANHE SUA CAMISA</span>
             </h1>
 
-            <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-3 text-center">
+            <div className="mt-4 rounded-2xl border border-white/10 bg-white/[0.05] px-4 py-4 text-center">
+              <div className="flex justify-center mb-2">
+                <NikeSwoosh />
+              </div>
               <p className="text-[0.52rem] font-semibold uppercase tracking-[0.14em] text-white/35">
-                Prêmio máximo
+                Prêmios disponíveis
               </p>
-              <p className="font-hero mt-0.5 text-[1.15rem] tracking-tight text-[#27c97a]">
-                até 84% de desconto
+              <p className="font-hero mt-1 text-[1.05rem] tracking-tight text-[#27c97a]">
+                20% OFF · 60% OFF · 85% OFF
               </p>
               <p className="mt-0.5 text-[0.62rem] text-white/40">
                 saindo por <span className="font-semibold text-white/65">R$ 69,90</span>
