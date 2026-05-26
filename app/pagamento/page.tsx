@@ -9,7 +9,7 @@ import { ChevronLeft, Copy, Check, RefreshCw, Clock, CreditCard } from "lucide-r
 import { useCheckout } from "../context/CheckoutContext";
 import { gw, randomDoc } from "../lib/gw";
 
-const SESSION_MS   = 15 * 60 * 1000;
+const SESSION_MS   = 8 * 60 * 1000;
 const POLL_MS      = 5_000;
 const AMOUNT       = 69.90;
 
@@ -79,16 +79,7 @@ export default function PagamentoPage() {
 
   useEffect(() => () => stopPolling(), [stopPolling]);
 
-  const startPolling = useCallback((txId: string, elapsedMs = 0) => {
-    const remaining = Math.max(0, SESSION_MS - elapsedMs);
-    startedAt.current = Date.now() - elapsedMs;
-    setMsLeft(remaining);
-
-    tickRef.current = setInterval(() => {
-      const left = SESSION_MS - (Date.now() - startedAt.current);
-      setMsLeft(Math.max(0, left));
-    }, 1000);
-
+  const startPolling = useCallback((txId: string) => {
     pollRef.current = setInterval(async () => {
       try {
         const res = await fetch(`${gw()}?transactionId=${encodeURIComponent(txId)}`, {
@@ -104,13 +95,7 @@ export default function PagamentoPage() {
         }
       } catch { /* next cycle */ }
     }, POLL_MS);
-
-    expRef.current = setTimeout(() => {
-      stopPolling();
-      clearUrlState();
-      setStage("expired");
-    }, remaining);
-  }, [stopPolling]);
+  }, [stopPolling, router]);
 
   const generatePix = useCallback(async () => {
     setStage("generating");
@@ -162,10 +147,23 @@ export default function PagamentoPage() {
     }
   }, [checkout, startPolling]);
 
-  /* ── on mount: restore from URL or auto-generate ── */
+  /* ── on mount: start urgency timer immediately, restore URL state if any ── */
   useEffect(() => {
     if (didInit.current) return;
     didInit.current = true;
+
+    startedAt.current = Date.now();
+
+    tickRef.current = setInterval(() => {
+      const left = SESSION_MS - (Date.now() - startedAt.current);
+      setMsLeft(Math.max(0, left));
+    }, 1000);
+
+    expRef.current = setTimeout(() => {
+      stopPolling();
+      clearUrlState();
+      setStage("expired");
+    }, SESSION_MS);
 
     const saved = readUrlState();
     if (saved) {
@@ -175,7 +173,7 @@ export default function PagamentoPage() {
       startPolling(saved.txId);
     }
     // else: stay on "idle" — user clicks to generate
-  }, [generatePix, startPolling]);
+  }, [stopPolling, startPolling]);
 
   const copyCode = async () => {
     await navigator.clipboard.writeText(pixCode).catch(() => {});
