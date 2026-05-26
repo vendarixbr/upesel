@@ -120,10 +120,10 @@ export default function Home() {
                 Prêmios disponíveis
               </p>
               <p className="font-hero mt-1 text-[1.05rem] tracking-tight text-[#27c97a]">
-                20% OFF · 60% OFF · 85% OFF
+                20% OFF - 60% OFF - 85% OFF
               </p>
-              <p className="mt-0.5 text-[0.62rem] text-white/40">
-                saindo por <span className="font-semibold text-white/65">R$ 69,90</span>
+              <p className="mt-0.5 text-[0.62rem] font-semibold text-[#27c97a]/70 uppercase tracking-[0.08em]">
+                + Frete Grátis
               </p>
             </div>
 
