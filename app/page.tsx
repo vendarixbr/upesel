@@ -7,12 +7,12 @@ import { useState, useEffect } from "react";
 const JERSEYS = [
   {
     label: "Amarelo / Verde",
-    img:   "https://imgnike-a.akamaihd.net/1920x1920/10977200A4.jpg",
+    img:   "/camisabrasilhome2.jpg",
     color: "#facc15",
   },
   {
     label: "Azul / Preto",
-    img:   "https://imgnike-a.akamaihd.net/1920x1920/09761915A3.jpg",
+    img:   "/camisabrasilhome1.jpg",
     color: "#60a5fa",
   },
 ] as const;
@@ -162,7 +162,6 @@ export default function Home() {
                     alt={label}
                     fill
                     className="object-cover object-top"
-                    referrerPolicy="no-referrer"
                     sizes="(max-width: 480px) 45vw, 180px"
                   />
                   <div className="pointer-events-none absolute inset-x-0 bottom-0 z-10">
