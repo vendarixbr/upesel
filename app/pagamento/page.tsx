@@ -11,7 +11,7 @@ import { gw, randomDoc } from "../lib/gw";
 
 const SESSION_MS   = 15 * 60 * 1000;
 const POLL_MS      = 5_000;
-const AMOUNT       = 69.90;
+const AMOUNT       = 49.90;
 
 function formatPrice(v: number) {
   return `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -122,7 +122,7 @@ export default function PagamentoPage() {
     raw.delete("pix");
     const utm = raw.toString();
 
-    const AMOUNT_CENTS = 6990;
+    const AMOUNT_CENTS = 4990;
 
     try {
       const res = await fetch(gw(), {

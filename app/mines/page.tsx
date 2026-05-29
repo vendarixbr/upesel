@@ -226,8 +226,8 @@ function WinModal({ foundFrete, onClaim }: { foundFrete: boolean; onClaim: () =>
           <div className="inline-flex items-center gap-2.5 rounded-full border border-white/10 bg-white/[0.05] px-4 py-2">
             <span className="text-[0.55rem] font-semibold text-white/30 line-through">R$ 449,90</span>
             <span className="h-3 w-px bg-white/15" />
-            <span className="font-hero text-[1.1rem] tracking-tight text-[#27c97a]">R$ 69,90</span>
-            <span className="rounded-full border border-[#27c97a]/30 bg-[#27c97a]/10 px-2 py-0.5 text-[0.48rem] font-bold uppercase tracking-[0.1em] text-[#27c97a]">84% OFF</span>
+            <span className="font-hero text-[1.1rem] tracking-tight text-[#27c97a]">R$ 49,90</span>
+            <span className="rounded-full border border-[#27c97a]/30 bg-[#27c97a]/10 px-2 py-0.5 text-[0.48rem] font-bold uppercase tracking-[0.1em] text-[#27c97a]">89% OFF</span>
           </div>
           {foundFrete && (
             <p className="text-[0.7rem] font-semibold text-amber-400">+ Frete Grátis incluído</p>

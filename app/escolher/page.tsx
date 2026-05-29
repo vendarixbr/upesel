@@ -29,7 +29,7 @@ const CORES = [
 ] as const;
 
 const SIZES = ["P", "M", "G", "GG", "GGG"] as const;
-const BASE_PRICE = 69.90;
+const BASE_PRICE = 49.90;
 
 const NikeSwoosh = ({ className }: { className?: string }) => (
   <svg aria-hidden="true" className={className} viewBox="135.5 361.38 1000 356.39" xmlns="http://www.w3.org/2000/svg">
@@ -82,7 +82,7 @@ export default function EscolherPage() {
           <div className="flex items-center gap-3">
             <div className="flex flex-col leading-none">
               <span className="text-[0.55rem] font-semibold text-white/25 line-through">R$ 449,90</span>
-              <span className="font-hero text-[1.45rem] tracking-tight text-[#27c97a] drop-shadow-[0_0_16px_rgba(39,201,122,0.5)]">R$ 69,90</span>
+              <span className="font-hero text-[1.45rem] tracking-tight text-[#27c97a] drop-shadow-[0_0_16px_rgba(39,201,122,0.5)]">R$ 49,90</span>
             </div>
             <button
               onClick={handleConfirm}
@@ -124,7 +124,7 @@ export default function EscolherPage() {
               <span className="block text-[clamp(1.7rem,7.5vw,2.8rem)] text-white/50">MODELO</span>
             </h1>
             <p className="mt-2.5 text-[0.78rem] leading-[1.55] text-white/50">
-              Selecione a cor e o tamanho para garantir sua oferta de <strong className="text-white/75">R$ 69,90</strong>.
+              Selecione a cor e o tamanho para garantir sua oferta de <strong className="text-white/75">R$ 49,90</strong>.
             </p>
           </div>
 

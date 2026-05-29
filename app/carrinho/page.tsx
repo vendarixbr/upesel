@@ -21,12 +21,12 @@ export default function CartPage() {
   });
 
   useEffect(() => {
-    pixelInitiateCheckout({ value: checkout.total || 69.90, num_items: 1 });
+    pixelInitiateCheckout({ value: checkout.total || 49.90, num_items: 1 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const unitPrice    = checkout.total    || 69.90;
-  const unitSavings  = 449.90 - (checkout.precoBase || 69.90);
+  const unitPrice    = checkout.total    || 49.90;
+  const unitSavings  = 449.90 - (checkout.precoBase || 49.90);
   const totalPrice   = quantity * unitPrice;
   const totalSavings = quantity * unitSavings;
 

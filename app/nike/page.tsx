@@ -9,7 +9,7 @@ import { useCheckout } from '../context/CheckoutContext';
 import { pixelViewContent, pixelAddToCart } from '../lib/pixel';
 
 const SIZES = ['P', 'M', 'G', 'GG', 'GGG'];
-const BASE_PRICE  = 69.90;
+const BASE_PRICE  = 49.90;
 const CUSTOM_FEE  = 19.00;
 
 const CORES = [
