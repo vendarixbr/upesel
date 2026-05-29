@@ -47,9 +47,9 @@ export default function IdentificacaoPage() {
   const fmt = (v: number) =>
     `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 
-  const totalFinal    = checkout.total    || 139.19;
-  const totalOriginal = 749.99;
-  const economia      = totalOriginal - (checkout.precoBase || 139.19);
+  const totalFinal    = checkout.total    || 69.90;
+  const totalOriginal = 449.90;
+  const economia      = totalOriginal - (checkout.precoBase || 69.90);
 
   /* ── ViaCEP lookup ── */
   const lookupCEP = async (raw: string) => {
@@ -104,7 +104,7 @@ export default function IdentificacaoPage() {
       return;
     }
     checkout.set({ ...addr });
-    pixelAddPaymentInfo({ value: checkout.total || 139.19 });
+    pixelAddPaymentInfo({ value: checkout.total || 69.90 });
     router.push("/pagamento");
   };
 

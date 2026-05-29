@@ -14,13 +14,19 @@ export default function CartPage() {
   const [showBanner,  setShowBanner]  = useState(true);
   const [isCartEmpty, setIsCartEmpty] = useState(false);
 
+  const [voucherCode] = useState(() => {
+    const first = (checkout.nome || 'USUARIO').split(' ')[0].toUpperCase().replace(/[^A-Z]/g, '');
+    const num   = Math.floor(100 + Math.random() * 900);
+    return `${first}${num}`;
+  });
+
   useEffect(() => {
-    pixelInitiateCheckout({ value: checkout.total || 49.90, num_items: 1 });
+    pixelInitiateCheckout({ value: checkout.total || 69.90, num_items: 1 });
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  const unitPrice    = checkout.total    || 49.90;
-  const unitSavings  = 749.99 - (checkout.precoBase || 49.90);
+  const unitPrice    = checkout.total    || 69.90;
+  const unitSavings  = 449.90 - (checkout.precoBase || 69.90);
   const totalPrice   = quantity * unitPrice;
   const totalSavings = quantity * unitSavings;
 
@@ -38,7 +44,7 @@ export default function CartPage() {
     <div className="min-h-screen bg-white text-[#111] font-sans pb-32">
       {/* Header */}
       <header className="flex items-center justify-center px-6 py-4 relative border-b border-gray-200">
-        <Link href="/nike" className="absolute left-6">
+        <Link href="/escolher" className="absolute left-6">
           <ChevronLeft className="w-6 h-6" />
         </Link>
         <Image
@@ -164,19 +170,10 @@ export default function CartPage() {
             {/* Cupom de desconto */}
             <div className="mb-8 border-b border-gray-200 pb-8">
               <h3 className="text-[15px] font-medium mb-4">Cupom de desconto</h3>
-              <div className="flex gap-2 mb-4">
-                <input
-                  type="text"
-                  placeholder="Digite seu cupom"
-                  className="flex-1 border border-gray-300 rounded-full px-4 py-3 focus:outline-none focus:border-black text-[14px]"
-                />
-                <button className="border border-gray-300 rounded-full px-6 py-3 font-medium hover:border-black transition-colors text-[14px]">
-                  Aplicar
-                </button>
-              </div>
-              <div className="flex items-start gap-2 text-[12px] text-gray-600">
-                <Tag className="w-4 h-4 mt-0.5 flex-shrink-0" />
-                <p>Tem um vale-troca ou cartão presente? Você poderá usá-los na etapa de pagamento.</p>
+              <div className="flex items-center gap-3 rounded-full border border-[#007a33] bg-[#f0faf4] px-4 py-3">
+                <Tag className="w-4 h-4 flex-shrink-0 text-[#007a33]" />
+                <span className="flex-1 text-[14px] font-semibold tracking-wider text-[#111]">{voucherCode}</span>
+                <span className="text-[11px] font-semibold uppercase tracking-[0.12em] text-[#007a33]">em utilização</span>
               </div>
             </div>
 
@@ -185,9 +182,9 @@ export default function CartPage() {
               <h3 className="text-[18px] font-medium mb-6">Resumo</h3>
 
               <div className="space-y-3 mb-6 text-[14px]">
-                <div className="flex justify-between">
-                  <span className="text-gray-600">{nomeProduto}</span>
-                  <span>{fmt(quantity * checkout.precoBase)}</span>
+                <div className="flex justify-between gap-4">
+                  <span className="text-gray-600 leading-snug">{nomeProduto}</span>
+                  <span className="flex-shrink-0">{fmt(quantity * checkout.precoBase)}</span>
                 </div>
                 {hasCustom && (
                   <div className="flex justify-between">
@@ -224,7 +221,7 @@ export default function CartPage() {
         ) : (
           <div className="text-center py-12">
             <p className="text-gray-500 mb-4">Seu carrinho está vazio.</p>
-            <Link href="/nike" className="inline-block bg-black text-white rounded-full px-8 py-3 font-medium text-[15px]">
+            <Link href="/escolher" className="inline-block bg-black text-white rounded-full px-8 py-3 font-medium text-[15px]">
               Continuar comprando
             </Link>
           </div>
@@ -238,7 +235,7 @@ export default function CartPage() {
             href="/identificacao"
             className="w-full bg-black text-white rounded-full py-4 font-medium text-[15px] hover:bg-gray-800 transition-colors flex items-center justify-center gap-2"
           >
-            <span>Continuar</span>
+            <span>Garantir minha oferta</span>
             <span className="opacity-50">·</span>
             <span>{fmt(totalPrice)}</span>
           </Link>

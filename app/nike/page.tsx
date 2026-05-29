@@ -9,7 +9,7 @@ import { useCheckout } from '../context/CheckoutContext';
 import { pixelViewContent, pixelAddToCart } from '../lib/pixel';
 
 const SIZES = ['P', 'M', 'G', 'GG', 'GGG'];
-const BASE_PRICE  = 49.90;
+const BASE_PRICE  = 69.90;
 const CUSTOM_FEE  = 19.00;
 
 const CORES = [
@@ -123,7 +123,7 @@ export default function Page() {
         {/* Price */}
         <div className="mb-6">
           <div className="flex items-baseline gap-2">
-            <span className="text-gray-500 line-through text-lg">R$ 749,99</span>
+            <span className="text-gray-500 line-through text-lg">R$ 449,90</span>
             <span className="text-[#007a33] text-[28px] font-bold">{fmt(total)}</span>
           </div>
           {personalizar && (
