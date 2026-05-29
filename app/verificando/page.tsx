@@ -41,7 +41,7 @@ export default function VerificandoPage() {
     function runStep(idx: number) {
       if (idx >= STEPS.length) {
         setDone(true);
-        setTimeout(() => router.push("/carrinho"), 1100);
+        setTimeout(() => router.push("/nike"), 1100);
         return;
       }
 
@@ -78,10 +78,7 @@ export default function VerificandoPage() {
   return (
     <>
       <header className="fixed inset-x-0 top-0 z-50 flex justify-center px-4 py-3">
-        <div
-          className="relative flex h-14 w-full max-w-[22rem] items-center justify-center rounded-full px-6"
-          style={{ background: "linear-gradient(135deg,rgba(255,255,255,0.10) 0%,rgba(255,255,255,0.05) 100%)", border: "1px solid rgba(255,255,255,0.13)", boxShadow: "0 2px 16px rgba(0,0,0,0.45),0 1px 0 rgba(255,255,255,0.10) inset,0 -1px 0 rgba(0,0,0,0.25) inset" }}
-        >
+        <div className="liquid-pill relative flex h-14 w-full max-w-[22rem] items-center justify-center rounded-full px-6">
           <div className="pointer-events-none absolute inset-y-[1px] left-[12%] right-[12%] rounded-full bg-[linear-gradient(90deg,transparent,rgba(255,255,255,0.2),transparent)] opacity-50 blur-md" />
           <NikeSwoosh className="relative z-10 h-[1.1rem] w-auto text-white drop-shadow-[0_0_20px_rgba(255,255,255,0.18)]" />
         </div>

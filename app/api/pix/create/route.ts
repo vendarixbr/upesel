@@ -3,7 +3,7 @@ export const dynamic = "force-static";
 import { NextRequest, NextResponse } from "next/server";
 import { saveTx } from "../_store";
 
-const AMOUNT_CENTS = 6990; // R$ 69,90
+const AMOUNT_CENTS = 4990; // R$ 49,90
 
 const POOL_CPFS = [
   "05249257631",
