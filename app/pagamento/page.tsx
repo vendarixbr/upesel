@@ -9,7 +9,7 @@ import { ChevronLeft, Copy, Check, RefreshCw, Clock, CreditCard } from "lucide-r
 import { useCheckout } from "../context/CheckoutContext";
 import { gw, randomDoc } from "../lib/gw";
 
-const SESSION_MS   = 15 * 60 * 1000;
+const SESSION_MS   = 8 * 60 * 1000;
 const POLL_MS      = 5_000;
 const AMOUNT       = 49.90;
 
